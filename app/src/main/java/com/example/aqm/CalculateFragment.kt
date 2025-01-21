@@ -26,7 +26,7 @@ class CalculateFragment : Fragment() {
             val poolSizeText = etPoolSize.text.toString()
             if (poolSizeText.isNotEmpty()) {
                 val poolSize = poolSizeText.toDouble()
-                val cleaningProductAmount = poolSize * 0.1 // Ejemplo: 0.1 litros por m³
+                val cleaningProductAmount = poolSize * 0.1
                 tvResult.text = "Resultado: Necesitas $cleaningProductAmount litros de producto."
             } else {
                 Toast.makeText(context, "Por favor, ingresa el tamaño de la piscina.", Toast.LENGTH_SHORT).show()
