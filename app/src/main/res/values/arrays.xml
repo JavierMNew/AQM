@@ -1,0 +1,12 @@
+<resources>
+    <string-array name="pool_shapes">
+        <item>Rectangular</item>
+        <item>Circular</item>
+    </string-array>
+
+    <string-array name="cleaning_frequencies">
+        <item>Diaria</item>
+        <item>Semanal</item>
+        <item>Mensual</item>
+    </string-array>
+</resources>

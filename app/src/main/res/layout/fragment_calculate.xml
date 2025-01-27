@@ -3,36 +3,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:paddingTop="?attr/actionBarSize">
 
+    <!-- Mensaje inicial -->
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Calculadora de limpieza"
-        android:textSize="20sp"
-        android:textStyle="bold" />
-
-    <EditText
-        android:id="@+id/etPoolSize"
+        android:id="@+id/textViewNoData"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Tamaño de la piscina (en m³)"
-        android:inputType="numberDecimal"
-        android:layout_marginTop="16dp" />
+        android:text="No hay datos registrados para la piscina."
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:layout_marginBottom="24dp" />
 
+    <!-- Botón para iniciar el registro de datos -->
     <Button
-        android:id="@+id/btnCalculate"
+        android:id="@+id/buttonAddPoolData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Calcular"
-        android:layout_marginTop="16dp" />
+        android:text="Agregar datos de la piscina"
+        android:layout_gravity="center" />
 
-    <TextView
-        android:id="@+id/tvResult"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Resultado: "
-        android:layout_marginTop="16dp"
-        android:textSize="16sp" />
 </LinearLayout>
