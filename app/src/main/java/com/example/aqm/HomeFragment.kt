@@ -34,17 +34,16 @@ class HomeFragment : Fragment() {
 
     private fun loadPoolData() {
         val sharedPrefs = requireContext().getSharedPreferences("pool_data", Context.MODE_PRIVATE)
-        val shape = sharedPrefs.getString("shape", "No definido")
+        val shape = sharedPrefs.getString("shape", null)
         val length = sharedPrefs.getFloat("length", 0f)
         val width = sharedPrefs.getFloat("width", 0f)
         val depth = sharedPrefs.getFloat("depth", 0f)
         val frequency = sharedPrefs.getInt("frequency", 0)
 
-        // Calcular el volumen (largo * ancho * profundidad * 1000 para convertir a litros)
-        val volume = length * width * depth * 1000
-
-        // Mostrar los datos en los TextView correspondientes
-        binding.tvPoolVolume.text = """
+        if (shape != null && length > 0 && width > 0 && depth > 0) {
+            // Mostrar datos de la piscina
+            val volume = length * width * depth * 1000 // Calcular volumen en litros
+            binding.tvPoolVolume.text = """
             Forma de la piscina: $shape
             Largo: ${length}m
             Ancho: ${width}m
@@ -52,6 +51,10 @@ class HomeFragment : Fragment() {
             Volumen: ${volume}L
             Frecuencia de limpieza: cada $frequency días
         """.trimIndent()
+        } else {
+            // Mostrar mensaje de que no hay datos
+            binding.tvPoolVolume.text = "No hay datos registrados para la piscina."
+        }
     }
 
     override fun onDestroyView() {

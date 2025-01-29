@@ -56,34 +56,41 @@ class CalculateFragment : Fragment() {
             binding.textViewNoData.visibility = View.VISIBLE
             binding.formGroup.visibility = View.VISIBLE
             binding.savedDataGroup.visibility = View.GONE
+        }
 
-            binding.btnSave.setOnClickListener {
-                val newShape = binding.etShape.text.toString()
-                val newLength = binding.etLength.text.toString().toFloatOrNull()
-                val newWidth = binding.etWidth.text.toString().toFloatOrNull()
-                val newDepth = binding.etDepth.text.toString().toFloatOrNull()
-                val newFrequency = binding.etFrecuency.text.toString().toIntOrNull()
+        // Configurar el botón de guardar datos
+        binding.btnSave.setOnClickListener {
+            val newShape = binding.etShape.text.toString()
+            val newLength = binding.etLength.text.toString().toFloatOrNull()
+            val newWidth = binding.etWidth.text.toString().toFloatOrNull()
+            val newDepth = binding.etDepth.text.toString().toFloatOrNull()
+            val newFrequency = binding.etFrecuency.text.toString().toIntOrNull()
 
-                if (!newShape.isNullOrBlank() && newLength != null && newWidth != null && newDepth != null && newFrequency != null) {
-                    sharedPrefs.edit().apply {
-                        putString("shape", newShape)
-                        putFloat("length", newLength)
-                        putFloat("width", newWidth)
-                        putFloat("depth", newDepth)
-                        putInt("frequency", newFrequency)
-                        apply()
-                    }
-
-                    Toast.makeText(context, "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
-                    refreshFragment()
-                } else {
-                    Toast.makeText(context, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show()
+            if (!newShape.isNullOrBlank() && newLength != null && newWidth != null && newDepth != null && newFrequency != null) {
+                // Guardar los datos en SharedPreferences
+                sharedPrefs.edit().apply {
+                    putString("shape", newShape)
+                    putFloat("length", newLength)
+                    putFloat("width", newWidth)
+                    putFloat("depth", newDepth)
+                    putInt("frequency", newFrequency)
+                    apply() // Guardar los cambios
                 }
+
+                // Mostrar un mensaje de éxito
+                Toast.makeText(requireContext(), "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
+
+                // Refrescar el fragmento para mostrar los datos guardados
+                refreshFragment()
+            } else {
+                // Mostrar un mensaje de error si algún campo está vacío o es inválido
+                Toast.makeText(requireContext(), "Por favor, completa todos los campos correctamente", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun refreshFragment() {
+        // Recargar el fragmento para mostrar los datos actualizados
         requireActivity().supportFragmentManager.beginTransaction().apply {
             detach(this@CalculateFragment)
             attach(this@CalculateFragment)

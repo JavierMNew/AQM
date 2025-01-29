@@ -81,14 +81,14 @@ class SettingsFragment : Fragment() {
     }
 
     private fun changeAppLanguage(language: String) {
-        val locale = when (language) {
-            "English" -> Locale("en")
-            else -> Locale("es") // Español por defecto
+        val languageCode = when (language) {
+            "English" -> "en"
+            else -> "es" // Español por defecto
         }
-        Locale.setDefault(locale)
-        val config = resources.configuration
-        config.setLocale(locale)
-        resources.updateConfiguration(config, resources.displayMetrics)
+
+        // Guardar el idioma seleccionado en SharedPreferences
+        val sharedPrefs = requireContext().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+        sharedPrefs.edit().putString("app_language", languageCode).apply()
 
         // Reiniciar la actividad para aplicar el cambio de idioma
         val intent = Intent(requireContext(), MainActivity::class.java)
@@ -99,6 +99,12 @@ class SettingsFragment : Fragment() {
 
     private fun resetPoolData() {
         val sharedPrefs = requireContext().getSharedPreferences("pool_data", Context.MODE_PRIVATE)
-        sharedPrefs.edit().clear().apply()
+        sharedPrefs.edit().clear().apply() // Borrar todos los datos
+
+        // Notificar a los fragmentos que los datos han cambiado
+        (requireActivity() as MainActivity).refreshFragments()
+
+        Toast.makeText(requireContext(), "Datos de piscina reestablecidos.", Toast.LENGTH_SHORT).show()
     }
+
 }

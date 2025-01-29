@@ -1,5 +1,6 @@
 package com.example.aqm
 
+import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -7,6 +8,7 @@ import com.example.aqm.fragments.HomeFragment
 import com.example.aqm.fragments.CalculateFragment
 import com.example.aqm.fragments.SettingsFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
@@ -18,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setDefaultLanguage() // Establecer el idioma por defecto al iniciar
         setContentView(R.layout.activity_main)
 
         // Inicializar los fragmentos
@@ -57,4 +60,34 @@ class MainActivity : AppCompatActivity() {
             commit()
         }
     }
+
+    private fun setDefaultLanguage() {
+        val sharedPrefs = getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+        val language = sharedPrefs.getString("app_language", "es") ?: "es" // Español por defecto
+        setAppLanguage(language)
+    }
+
+    private fun setAppLanguage(languageCode: String) {
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        val config = resources.configuration
+        config.setLocale(locale)
+        resources.updateConfiguration(config, resources.displayMetrics)
+    }
+
+    fun refreshFragments() {
+        // Recargar HomeFragment
+        supportFragmentManager.beginTransaction()
+            .replace(R.id.fragmentContainer, HomeFragment())
+            .commit()
+
+        // Recargar CalculateFragment si está visible
+        val calculateFragment = supportFragmentManager.findFragmentByTag("CalculateFragment")
+        if (calculateFragment != null && calculateFragment.isVisible) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, CalculateFragment())
+                .commit()
+        }
+    }
+
 }
