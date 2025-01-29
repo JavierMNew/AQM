@@ -2,6 +2,7 @@ package com.example.aqm.fragments
 
 import android.content.Context
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.aqm.MainActivity
+import com.example.aqm.R
 import com.example.aqm.databinding.FragmentSettingsBinding
 import java.util.Locale
 
@@ -21,7 +23,6 @@ class SettingsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Configuración del view binding
         binding = FragmentSettingsBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -29,81 +30,49 @@ class SettingsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Configurar el Spinner para cambiar idioma
-        val languages = listOf("Español", "English")
+        val sharedPrefs = requireContext().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+        val savedLanguage = sharedPrefs.getString("language", Locale.getDefault().language) ?: "es"
+
+        // Configurar el Spinner con los idiomas
+        val languages = listOf(getString(R.string.language_spanish), getString(R.string.language_english))
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, languages)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerLanguage.adapter = adapter
 
-        // Detectar cuando el idioma cambia realmente
+        // Seleccionar el idioma guardado en el Spinner
+        binding.spinnerLanguage.setSelection(if (savedLanguage == "en") 1 else 0)
+
+        // Detectar cuando el usuario selecciona otro idioma
         binding.spinnerLanguage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            var isFirstSelection = true // Evitar mostrar el mensaje al abrir la pantalla
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
-                if (!isFirstSelection) {
-                    val selectedLanguage = parent.getItemAtPosition(position).toString()
-                    changeAppLanguage(selectedLanguage)
-                    Toast.makeText(requireContext(), "Idioma cambiado a $selectedLanguage", Toast.LENGTH_SHORT).show()
+                val newLanguage = if (position == 1) "en" else "es"
+                if (newLanguage != savedLanguage) {
+                    changeAppLanguage(newLanguage)
                 }
-                isFirstSelection = false
             }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // No hacer nada si no se selecciona nada
-            }
-        }
-
-        // Configurar acciones para botones adicionales
-        binding.buttonViewHistory.setOnClickListener {
-            // Navegar a una nueva actividad o fragmento para mostrar el historial
-            Toast.makeText(requireContext(), "Abriendo historial de limpiezas...", Toast.LENGTH_SHORT).show()
-        }
-
-        binding.buttonResetPoolData.setOnClickListener {
-            resetPoolData()
-            Toast.makeText(requireContext(), "Datos de piscina reestablecidos.", Toast.LENGTH_SHORT).show()
-        }
-
-        // Cargar el estado actual de las notificaciones
-        val sharedPrefs = requireContext().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
-        binding.switchNotifications.isChecked = sharedPrefs.getBoolean("notifications_enabled", true)
-
-        binding.switchNotifications.setOnCheckedChangeListener { _, isChecked ->
-            val message = if (isChecked) {
-                "Notificaciones habilitadas"
-            } else {
-                "Notificaciones deshabilitadas"
-            }
-            Toast.makeText(requireContext(), message, Toast.LENGTH_SHORT).show()
-
-            // Guardar el estado de las notificaciones
-            sharedPrefs.edit().putBoolean("notifications_enabled", isChecked).apply()
+            override fun onNothingSelected(parent: AdapterView<*>) {}
         }
     }
 
-    private fun changeAppLanguage(language: String) {
-        val languageCode = when (language) {
-            "English" -> "en"
-            else -> "es" // Español por defecto
-        }
-
-        // Guardar el idioma seleccionado en SharedPreferences
+    private fun changeAppLanguage(languageCode: String) {
+        // Guardar el nuevo idioma en SharedPreferences
         val sharedPrefs = requireContext().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
-        sharedPrefs.edit().putString("app_language", languageCode).apply()
+        sharedPrefs.edit().putString("language", languageCode).apply()
 
-        // Reiniciar la actividad para aplicar el cambio de idioma
+        // Aplicar configuración del nuevo idioma
+        val locale = Locale(languageCode)
+        Locale.setDefault(locale)
+        val config = Configuration()
+        config.setLocale(locale)
+
+        // Actualizar el contexto de la aplicación
+        requireActivity().baseContext.resources.updateConfiguration(config, requireActivity().baseContext.resources.displayMetrics)
+
+        // Reiniciar la actividad principal
         val intent = Intent(requireContext(), MainActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(intent)
         requireActivity().finish()
-    }
-
-    private fun resetPoolData() {
-        val sharedPrefs = requireContext().getSharedPreferences("pool_data", Context.MODE_PRIVATE)
-        sharedPrefs.edit().clear().apply() // Borrar todos los datos
-
-        // Notificar a los fragmentos que los datos han cambiado
-        (requireActivity() as MainActivity).refreshFragments()
-
-        Toast.makeText(requireContext(), "Datos de piscina reestablecidos.", Toast.LENGTH_SHORT).show()
     }
 }

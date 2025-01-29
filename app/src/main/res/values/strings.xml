@@ -1,8 +1,15 @@
 <resources>
-    <string name="settings_title">Configuración</string>
+        <string name="settings_title">Configuración</string>
     <string name="language_label">Idioma</string>
     <string name="notifications_label">Notificaciones</string>
     <string name="notifications_switch">Activar notificaciones</string>
     <string name="view_history_button">Ver Historial de Limpiezas</string>
     <string name="reset_pool_data_button">Restablecer Datos de la Piscina</string>
+    <string name="language_spanish">Español</string>
+    <string name="language_english">English</string>
+    <string name="language_changed">Language changed to %1$s</string>
+    <string name="open_cleaning_history">Opening cleaning history...</string>
+    <string name="reset_pool_data">Pool data reset.</string>
+    <string name="notifications_enabled">Notifications enabled</string>
+    <string name="notifications_disabled">Notifications disabled</string>
 </resources>
