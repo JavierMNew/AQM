@@ -80,22 +80,18 @@ class CalculateFragment : Fragment() {
                 // Mostrar un mensaje de éxito
                 Toast.makeText(requireContext(), "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
 
-                // Refrescar el fragmento para mostrar los datos guardados
-                refreshFragment()
+                // Actualizar la interfaz de usuario con los nuevos datos
+                binding.textViewNoData.visibility = View.GONE
+                binding.formGroup.visibility = View.GONE
+                binding.savedDataGroup.visibility = View.VISIBLE
+
+                binding.tvSavedShape.text = "Forma: $newShape"
+                binding.tvSavedDimensions.text = "Dimensiones: $newLength x $newWidth x $newDepth m"
+                binding.tvSavedFrequency.text = "Frecuencia: cada $newFrequency días"
             } else {
                 // Mostrar un mensaje de error si algún campo está vacío o es inválido
                 Toast.makeText(requireContext(), "Por favor, completa todos los campos correctamente", Toast.LENGTH_SHORT).show()
             }
         }
     }
-
-    private fun refreshFragment() {
-        // Recargar el fragmento para mostrar los datos actualizados
-        requireActivity().supportFragmentManager.beginTransaction().apply {
-            detach(this@CalculateFragment)
-            attach(this@CalculateFragment)
-            commit()
-        }
-    }
-
 }

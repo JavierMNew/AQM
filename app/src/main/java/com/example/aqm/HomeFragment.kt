@@ -1,6 +1,7 @@
 package com.example.aqm.fragments
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,10 @@ class HomeFragment : Fragment() {
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
+    private lateinit var sharedPrefs: SharedPreferences
+    private val preferenceChangeListener = SharedPreferences.OnSharedPreferenceChangeListener { _, _ ->
+        loadPoolData()
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,17 +28,25 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        sharedPrefs = requireContext().getSharedPreferences("pool_data", Context.MODE_PRIVATE)
         loadPoolData()
     }
 
     override fun onResume() {
         super.onResume()
+        // Registrar el listener
+        sharedPrefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
         // Cargar los datos cada vez que el fragmento se reanuda
         loadPoolData()
     }
 
+    override fun onPause() {
+        super.onPause()
+        // Desregistrar el listener
+        sharedPrefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
+    }
+
     private fun loadPoolData() {
-        val sharedPrefs = requireContext().getSharedPreferences("pool_data", Context.MODE_PRIVATE)
         val shape = sharedPrefs.getString("shape", null)
         val length = sharedPrefs.getFloat("length", 0f)
         val width = sharedPrefs.getFloat("width", 0f)
