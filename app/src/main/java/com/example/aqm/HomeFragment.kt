@@ -1,32 +1,61 @@
 package com.example.aqm.fragments
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import android.widget.TextView
-import com.example.aqm.R
-import java.text.SimpleDateFormat
-import java.util.*
+import com.example.aqm.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
+
+    private var _binding: FragmentHomeBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_home, container, false)
+    ): View {
+        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        return binding.root
+    }
 
-        // fecha actual
-        val currentDateTextView = view.findViewById<TextView>(R.id.tvCurrentDate)
-        val sdf = SimpleDateFormat("dd 'de' MMMM 'del' yyyy", Locale("es", "ES"))
-        currentDateTextView.text = "Hoy estamos a ${sdf.format(Date())}"
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        loadPoolData()
+    }
 
-        // datos estáticos de la piscina
-        val daysSinceCleaningTextView = view.findViewById<TextView>(R.id.tvDaysSinceLastCleaning)
-        daysSinceCleaningTextView.text = "Han pasado 7 días desde la última limpieza"
+    override fun onResume() {
+        super.onResume()
+        // Cargar los datos cada vez que el fragmento se reanuda
+        loadPoolData()
+    }
 
-        return view
+    private fun loadPoolData() {
+        val sharedPrefs = requireContext().getSharedPreferences("pool_data", Context.MODE_PRIVATE)
+        val shape = sharedPrefs.getString("shape", "No definido")
+        val length = sharedPrefs.getFloat("length", 0f)
+        val width = sharedPrefs.getFloat("width", 0f)
+        val depth = sharedPrefs.getFloat("depth", 0f)
+        val frequency = sharedPrefs.getInt("frequency", 0)
+
+        // Calcular el volumen (largo * ancho * profundidad * 1000 para convertir a litros)
+        val volume = length * width * depth * 1000
+
+        // Mostrar los datos en los TextView correspondientes
+        binding.tvPoolVolume.text = """
+            Forma de la piscina: $shape
+            Largo: ${length}m
+            Ancho: ${width}m
+            Profundidad: ${depth}m
+            Volumen: ${volume}L
+            Frecuencia de limpieza: cada $frequency días
+        """.trimIndent()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

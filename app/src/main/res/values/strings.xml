@@ -1,7 +1,8 @@
 <resources>
-    <string name="app_name">AQM</string>
-    <string-array name="languages">
-        <item>Español</item>
-        <item>English</item>
-    </string-array>
+    <string name="settings_title">Configuración</string>
+    <string name="language_label">Idioma</string>
+    <string name="notifications_label">Notificaciones</string>
+    <string name="notifications_switch">Activar notificaciones</string>
+    <string name="view_history_button">Ver Historial de Limpiezas</string>
+    <string name="reset_pool_data_button">Restablecer Datos de la Piscina</string>
 </resources>

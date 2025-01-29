@@ -1,0 +1,8 @@
+<resources>
+    <string name="settings_title">Settings</string>
+    <string name="language_label">Language</string>
+    <string name="notifications_label">Notifications</string>
+    <string name="notifications_switch">Enable notifications</string>
+    <string name="view_history_button">View Cleaning History</string>
+    <string name="reset_pool_data_button">Reset Pool Data</string>
+</resources>
