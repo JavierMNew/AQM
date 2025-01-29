@@ -52,16 +52,16 @@ class HomeFragment : Fragment() {
         val width = sharedPrefs.getFloat("width", 0f)
         val depth = sharedPrefs.getFloat("depth", 0f)
         val frequency = sharedPrefs.getInt("frequency", 0)
+        val volume = sharedPrefs.getFloat("volume", 0f)
 
         if (shape != null && length > 0 && width > 0 && depth > 0) {
             // Mostrar datos de la piscina
-            val volume = length * width * depth * 1000 // Calcular volumen en litros
             binding.tvPoolVolume.text = """
             Forma de la piscina: $shape
             Largo: ${length}m
             Ancho: ${width}m
             Profundidad: ${depth}m
-            Volumen: ${volume}L
+            Volumen: ${volume}m³
             Frecuencia de limpieza: cada $frequency días
         """.trimIndent()
         } else {

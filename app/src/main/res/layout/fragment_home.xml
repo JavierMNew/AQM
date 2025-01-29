@@ -101,6 +101,8 @@
                     android:textColor="#333333"
                     android:layout_marginBottom="8dp" />
 
+                <!-- Eliminar o comentar estas vistas -->
+                <!--
                 <TextView
                     android:id="@+id/tvPoolPH"
                     android:layout_width="wrap_content"
@@ -111,28 +113,20 @@
                     android:layout_marginBottom="4dp" />
 
                 <TextView
-                    android:id="@+id/tvPoolChlorine"
+                    android:id="@+id/tvPoolTemperature"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Nivel de cloro: 2 ppm"
+                    android:text="Temperatura: 25 °C"
                     android:textSize="16sp"
                     android:textColor="#666666"
                     android:layout_marginBottom="4dp" />
+                -->
 
                 <TextView
                     android:id="@+id/tvPoolVolume"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Volumen: 15,000 litros"
-                    android:textSize="16sp"
-                    android:textColor="#666666"
-                    android:layout_marginBottom="4dp" />
-
-                <TextView
-                    android:id="@+id/tvPoolTemperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Temperatura: 25 °C"
                     android:textSize="16sp"
                     android:textColor="#666666"
                     android:layout_marginBottom="4dp" />

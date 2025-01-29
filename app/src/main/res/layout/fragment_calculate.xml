@@ -1,110 +1,241 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:padding="16dp"
-    android:paddingTop="?attr/actionBarSize">
+    android:background="@color/white"
+    tools:context=".fragments.CalculateFragment">
 
-    <!-- Mensaje inicial -->
-    <TextView
-        android:id="@+id/textViewNoData"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="No hay datos registrados para la piscina."
-        android:textSize="18sp"
-        android:textAlignment="center"
-        android:layout_marginBottom="24dp" />
-
-    <!-- Grupo para mostrar datos guardados -->
     <LinearLayout
-        android:id="@+id/savedDataGroup"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:visibility="gone"
-        android:padding="16dp">
+        android:paddingBottom="16dp">
 
+        <!-- Título de la sección de cálculo -->
         <TextView
-            android:id="@+id/tvSavedShape"
-            android:layout_width="wrap_content"
+            android:id="@+id/titleCalculate"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Forma: Rectangular"
-            android:textSize="16sp" />
+            android:text="Cálculo de Piscina"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
 
+        <!-- Mensaje inicial -->
         <TextView
-            android:id="@+id/tvSavedDimensions"
-            android:layout_width="wrap_content"
+            android:id="@+id/textViewNoData"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dimensiones: 8 x 4 x 2 m"
-            android:textSize="16sp" />
+            android:text="No hay datos registrados para la piscina."
+            android:textSize="18sp"
+            android:textAlignment="center"
+            android:layout_marginBottom="24dp" />
 
-        <TextView
-            android:id="@+id/tvSavedFrequency"
-            android:layout_width="wrap_content"
+        <!-- Spinner para seleccionar la forma de la piscina -->
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Frecuencia: cada 7 días"
-            android:textSize="16sp" />
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp">
 
-        <!-- Botones para cálculos -->
-        <Button
-            android:id="@+id/btnCalculateVolume"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Calcular Volumen"
-            android:layout_marginTop="16dp"
-            android:layout_gravity="center" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
 
-        <Button
-            android:id="@+id/btnCalculateCleaning"
-            android:layout_width="wrap_content"
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Selecciona la forma de la piscina"
+                    android:textSize="18sp"
+                    android:layout_marginBottom="8dp" />
+
+                <Spinner
+                    android:id="@+id/spinnerShape"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- CardView para mostrar datos guardados -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/savedDataGroup"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Calcular Limpieza"
-            android:layout_marginTop="8dp"
-            android:layout_gravity="center" />
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvSavedShape"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Forma: Rectangular"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tvSavedDimensions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dimensiones: 8 x 4 x 2 m"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tvSavedFrequency"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Frecuencia: cada 7 días"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tvSavedVolume"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Volumen: 64 m³"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp" />
+
+                <Button
+                    android:id="@+id/btnCalculateChemicals"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cálculo de Productos Químicos Necesarios"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- CardView para formulario de ingreso -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/formGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <!-- Formulario para piscina rectangular -->
+                <LinearLayout
+                    android:id="@+id/formRectangular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/etLength"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Longitud (m)"
+                        android:layout_marginBottom="8dp" />
+
+                    <EditText
+                        android:id="@+id/etWidth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Ancho (m)"
+                        android:layout_marginBottom="8dp" />
+
+                    <EditText
+                        android:id="@+id/etDepth"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Profundidad (m)"
+                        android:layout_marginBottom="8dp" />
+                </LinearLayout>
+
+                <!-- Formulario para piscina circular -->
+                <LinearLayout
+                    android:id="@+id/formCircular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/etDiameter"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Diámetro (m)"
+                        android:layout_marginBottom="8dp" />
+
+                    <EditText
+                        android:id="@+id/etDepthCircular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Profundidad (m)"
+                        android:layout_marginBottom="8dp" />
+                </LinearLayout>
+
+                <!-- Formulario para piscina triangular -->
+                <LinearLayout
+                    android:id="@+id/formTriangular"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <EditText
+                        android:id="@+id/etBase"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Base (m)"
+                        android:layout_marginBottom="8dp" />
+
+                    <EditText
+                        android:id="@+id/etHeight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Altura (m)"
+                        android:layout_marginBottom="8dp" />
+
+                    <EditText
+                        android:id="@+id/etDepthTriangular"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Profundidad (m)"
+                        android:layout_marginBottom="8dp" />
+                </LinearLayout>
+
+                <EditText
+                    android:id="@+id/etFrecuency"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Frecuencia de limpieza (días)"
+                    android:layout_marginBottom="8dp" />
+
+                <Button
+                    android:id="@+id/btnSave"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Guardar datos"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="16dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
     </LinearLayout>
-
-    <!-- Grupo para formulario de ingreso -->
-    <LinearLayout
-        android:id="@+id/formGroup"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <EditText
-            android:id="@+id/etShape"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Forma de la piscina" />
-
-        <EditText
-            android:id="@+id/etLength"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Longitud (m)" />
-
-        <EditText
-            android:id="@+id/etWidth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Ancho (m)" />
-
-        <EditText
-            android:id="@+id/etDepth"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Profundidad (m)" />
-
-        <EditText
-            android:id="@+id/etFrecuency"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Frecuencia de limpieza (días)" />
-
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Guardar datos"
-            android:layout_gravity="center" />
-    </LinearLayout>
-</LinearLayout>
+</ScrollView>
