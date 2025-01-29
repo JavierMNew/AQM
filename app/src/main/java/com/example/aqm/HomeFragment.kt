@@ -46,7 +46,7 @@ class HomeFragment : Fragment() {
         sharedPrefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
     }
 
-    private fun loadPoolData() {
+    fun loadPoolData() {
         val shape = sharedPrefs.getString("shape", null)
         val length = sharedPrefs.getFloat("length", 0f)
         val width = sharedPrefs.getFloat("width", 0f)

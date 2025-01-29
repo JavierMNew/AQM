@@ -106,5 +106,4 @@ class SettingsFragment : Fragment() {
 
         Toast.makeText(requireContext(), "Datos de piscina reestablecidos.", Toast.LENGTH_SHORT).show()
     }
-
 }

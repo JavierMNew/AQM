@@ -76,17 +76,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun refreshFragments() {
-        // Recargar HomeFragment
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.fragmentContainer, HomeFragment())
-            .commit()
-
-        // Recargar CalculateFragment si está visible
-        val calculateFragment = supportFragmentManager.findFragmentByTag("CalculateFragment")
-        if (calculateFragment != null && calculateFragment.isVisible) {
-            supportFragmentManager.beginTransaction()
-                .replace(R.id.fragmentContainer, CalculateFragment())
-                .commit()
+        val fragments = supportFragmentManager.fragments
+        for (fragment in fragments) {
+            when (fragment) {
+                is HomeFragment -> fragment.loadPoolData()
+                is CalculateFragment -> fragment.loadPoolData()
+            }
         }
     }
 

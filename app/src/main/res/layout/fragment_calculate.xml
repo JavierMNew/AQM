@@ -44,6 +44,23 @@
             android:layout_height="wrap_content"
             android:text="Frecuencia: cada 7 días"
             android:textSize="16sp" />
+
+        <!-- Botones para cálculos -->
+        <Button
+            android:id="@+id/btnCalculateVolume"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calcular Volumen"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center" />
+
+        <Button
+            android:id="@+id/btnCalculateCleaning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Calcular Limpieza"
+            android:layout_marginTop="8dp"
+            android:layout_gravity="center" />
     </LinearLayout>
 
     <!-- Grupo para formulario de ingreso -->
