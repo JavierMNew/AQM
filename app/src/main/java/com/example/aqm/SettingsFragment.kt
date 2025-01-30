@@ -35,6 +35,12 @@ class SettingsFragment : Fragment() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerLanguage.adapter = adapter
 
+        // Obtener el idioma guardado en SharedPreferences
+        val sharedPrefs = requireContext().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
+        val savedLanguage = sharedPrefs.getString("app_language", "es")
+        val selectedPosition = if (savedLanguage == "en") 1 else 0
+        binding.spinnerLanguage.setSelection(selectedPosition)
+
         // Detectar cuando el idioma cambia realmente
         binding.spinnerLanguage.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             var isFirstSelection = true // Evitar mostrar el mensaje al abrir la pantalla
@@ -64,7 +70,6 @@ class SettingsFragment : Fragment() {
         }
 
         // Cargar el estado actual de las notificaciones
-        val sharedPrefs = requireContext().getSharedPreferences("app_settings", Context.MODE_PRIVATE)
         binding.switchNotifications.isChecked = sharedPrefs.getBoolean("notifications_enabled", true)
 
         binding.switchNotifications.setOnCheckedChangeListener { _, isChecked ->

@@ -18,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var settingsFragment: SettingsFragment
     private var activeFragment: Fragment? = null
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setDefaultLanguage() // Establecer el idioma por defecto al iniciar
