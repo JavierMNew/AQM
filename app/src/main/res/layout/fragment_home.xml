@@ -36,7 +36,7 @@
                     android:id="@+id/tvWelcomeMessage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Bienvenido a AquaClean Manager"
+                    android:text="@string/welcome_message"
                     android:textSize="20sp"
                     android:textStyle="bold"
                     android:textColor="#333333"
@@ -47,7 +47,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
-                    android:text="Hoy estamos a 18 de enero del año 2025"
+                    android:text="@string/current_date"
                     android:textSize="16sp"
                     android:textColor="#666666"
                     android:gravity="center" />
@@ -72,9 +72,26 @@
                     android:id="@+id/tvDaysSinceLastCleaning"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Han pasado 7 días desde la última limpieza"
+                    android:text="@string/days_since_last_cleaning"
                     android:textSize="16sp"
                     android:textColor="#666666" />
+
+                <Button
+                    android:id="@+id/btnAddChlorineHome"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agregar Cloro"
+                    android:layout_marginTop="8dp"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tvChlorineStatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textSize="16sp"
+                    android:textColor="#666666"
+                    android:layout_marginTop="8dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -95,38 +112,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Datos de la piscina"
+                    android:text="@string/pool_data_title"
                     android:textSize="18sp"
                     android:textStyle="bold"
                     android:textColor="#333333"
                     android:layout_marginBottom="8dp" />
 
-                <!-- Eliminar o comentar estas vistas -->
-                <!--
-                <TextView
-                    android:id="@+id/tvPoolPH"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="PH actual: 7.4 (Ideal)"
-                    android:textSize="16sp"
-                    android:textColor="#666666"
-                    android:layout_marginBottom="4dp" />
-
-                <TextView
-                    android:id="@+id/tvPoolTemperature"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Temperatura: 25 °C"
-                    android:textSize="16sp"
-                    android:textColor="#666666"
-                    android:layout_marginBottom="4dp" />
-                -->
-
                 <TextView
                     android:id="@+id/tvPoolVolume"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Volumen: 15,000 litros"
+                    android:text="@string/pool_volume"
                     android:textSize="16sp"
                     android:textColor="#666666"
                     android:layout_marginBottom="4dp" />
@@ -135,7 +131,7 @@
                     android:id="@+id/tvPoolStatus"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Estado general: Listo para usar"
+                    android:text="@string/pool_status"
                     android:textSize="16sp"
                     android:textColor="#666666" />
             </LinearLayout>

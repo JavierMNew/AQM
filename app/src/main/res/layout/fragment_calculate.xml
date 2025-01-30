@@ -18,7 +18,7 @@
             android:id="@+id/titleCalculate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cálculo de Piscina"
+            android:text="@string/calculate_title"
             android:textSize="24sp"
             android:textStyle="bold"
             android:textColor="@color/black"
@@ -30,7 +30,7 @@
             android:id="@+id/textViewNoData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="No hay datos registrados para la piscina."
+            android:text="@string/no_data"
             android:textSize="18sp"
             android:textAlignment="center"
             android:layout_marginBottom="24dp" />
@@ -52,7 +52,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Selecciona la forma de la piscina"
+                    android:text="@string/select_shape"
                     android:textSize="18sp"
                     android:layout_marginBottom="8dp" />
 
@@ -116,9 +116,51 @@
                     android:id="@+id/btnCalculateChemicals"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Cálculo de Productos Químicos Necesarios"
+                    android:text="@string/calculate_chemicals"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp" />
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+
+        <!-- CardView para mostrar resultados del cálculo -->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/calculationResultsGroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            app:cardCornerRadius="12dp"
+            app:cardElevation="4dp"
+            android:visibility="gone">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:id="@+id/tvChlorineAmount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cloro necesario: 0 gramos"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp" />
+
+                <Button
+                    android:id="@+id/btnAddChlorine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agregar Cloro"
+                    android:layout_gravity="center"
+                    android:layout_marginBottom="8dp" />
+
+                <TextView
+                    android:id="@+id/tvNextCleaning"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Próxima limpieza en: 0 días"
+                    android:textSize="16sp"
+                    android:layout_marginBottom="8dp" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
 
@@ -150,21 +192,21 @@
                         android:id="@+id/etLength"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Longitud (m)"
+                        android:hint="@string/length_hint"
                         android:layout_marginBottom="8dp" />
 
                     <EditText
                         android:id="@+id/etWidth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Ancho (m)"
+                        android:hint="@string/width_hint"
                         android:layout_marginBottom="8dp" />
 
                     <EditText
                         android:id="@+id/etDepth"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Profundidad (m)"
+                        android:hint="@string/depth_hint"
                         android:layout_marginBottom="8dp" />
                 </LinearLayout>
 
@@ -180,14 +222,14 @@
                         android:id="@+id/etDiameter"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Diámetro (m)"
+                        android:hint="@string/diameter_hint"
                         android:layout_marginBottom="8dp" />
 
                     <EditText
                         android:id="@+id/etDepthCircular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Profundidad (m)"
+                        android:hint="@string/depth_hint"
                         android:layout_marginBottom="8dp" />
                 </LinearLayout>
 
@@ -203,21 +245,21 @@
                         android:id="@+id/etBase"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Base (m)"
+                        android:hint="@string/base_hint"
                         android:layout_marginBottom="8dp" />
 
                     <EditText
                         android:id="@+id/etHeight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Altura (m)"
+                        android:hint="@string/height_hint"
                         android:layout_marginBottom="8dp" />
 
                     <EditText
                         android:id="@+id/etDepthTriangular"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="Profundidad (m)"
+                        android:hint="@string/depth_hint"
                         android:layout_marginBottom="8dp" />
                 </LinearLayout>
 
@@ -225,14 +267,14 @@
                     android:id="@+id/etFrecuency"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Frecuencia de limpieza (días)"
+                    android:hint="@string/frequency_hint"
                     android:layout_marginBottom="8dp" />
 
                 <Button
                     android:id="@+id/btnSave"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Guardar datos"
+                    android:text="@string/save_data"
                     android:layout_gravity="center"
                     android:layout_marginTop="16dp" />
             </LinearLayout>

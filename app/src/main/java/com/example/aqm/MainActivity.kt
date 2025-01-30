@@ -24,6 +24,12 @@ class MainActivity : AppCompatActivity() {
         setDefaultLanguage() // Establecer el idioma por defecto al iniciar
         setContentView(R.layout.activity_main)
 
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragmentContainer, HomeFragment()) // Usar el ID correcto
+                .commit()
+        }
+
         // Inicializar los fragmentos
         homeFragment = HomeFragment()
         calculateFragment = CalculateFragment()
@@ -68,6 +74,7 @@ class MainActivity : AppCompatActivity() {
         setAppLanguage(language)
     }
 
+
     private fun setAppLanguage(languageCode: String) {
         val locale = Locale(languageCode)
         Locale.setDefault(locale)
@@ -79,9 +86,17 @@ class MainActivity : AppCompatActivity() {
     fun refreshFragments() {
         val fragments = supportFragmentManager.fragments
         for (fragment in fragments) {
-            when (fragment) {
-                is HomeFragment -> fragment.loadPoolData()
-                is CalculateFragment -> fragment.loadPoolData()
+            if (fragment is CalculateFragment) {
+                fragment.resetPoolData()
+            }
+        }
+    }
+
+    fun notifyChlorineAdded() {
+        val fragments = supportFragmentManager.fragments
+        for (fragment in fragments) {
+            if (fragment is HomeFragment) {
+                fragment.loadPoolData()
             }
         }
     }

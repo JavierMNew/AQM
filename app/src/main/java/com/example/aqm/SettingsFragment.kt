@@ -12,7 +12,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.aqm.MainActivity
 import com.example.aqm.databinding.FragmentSettingsBinding
-import java.util.Locale
 
 class SettingsFragment : Fragment() {
     private lateinit var binding: FragmentSettingsBinding
@@ -66,7 +65,6 @@ class SettingsFragment : Fragment() {
 
         binding.buttonResetPoolData.setOnClickListener {
             resetPoolData()
-            Toast.makeText(requireContext(), "Datos de piscina reestablecidos.", Toast.LENGTH_SHORT).show()
         }
 
         // Cargar el estado actual de las notificaciones

@@ -8,10 +8,15 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
+import com.example.aqm.MainActivity // Importar MainActivity
+import com.example.aqm.R
 import com.example.aqm.databinding.FragmentCalculateBinding
+import java.text.SimpleDateFormat
+import java.util.*
 
 class CalculateFragment : Fragment() {
 
@@ -36,7 +41,12 @@ class CalculateFragment : Fragment() {
         }
 
         // Configurar el Spinner para seleccionar la forma de la piscina
-        val shapes = listOf("Selecciona una forma", "Rectangular", "Circular", "Triangular")
+        val shapes = listOf(
+            getString(R.string.select_shape),
+            getString(R.string.shape_rectangular),
+            getString(R.string.shape_circular),
+            getString(R.string.shape_triangular)
+        )
         val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_item, shapes)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         binding.spinnerShape.adapter = adapter
@@ -44,9 +54,9 @@ class CalculateFragment : Fragment() {
         binding.spinnerShape.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 when (position) {
-                    1 -> showForm("Rectangular")
-                    2 -> showForm("Circular")
-                    3 -> showForm("Triangular")
+                    1 -> showForm(getString(R.string.shape_rectangular))
+                    2 -> showForm(getString(R.string.shape_circular))
+                    3 -> showForm(getString(R.string.shape_triangular))
                     else -> hideForms()
                 }
             }
@@ -64,7 +74,7 @@ class CalculateFragment : Fragment() {
             val frequency = binding.etFrecuency.text.toString().toIntOrNull()
 
             when (shape) {
-                "Rectangular" -> {
+                getString(R.string.shape_rectangular) -> {
                     val length = binding.etLength.text.toString().toFloatOrNull()
                     val width = binding.etWidth.text.toString().toFloatOrNull()
                     val depth = binding.etDepth.text.toString().toFloatOrNull()
@@ -76,7 +86,7 @@ class CalculateFragment : Fragment() {
                         showError()
                     }
                 }
-                "Circular" -> {
+                getString(R.string.shape_circular) -> {
                     val diameter = binding.etDiameter.text.toString().toFloatOrNull()
                     val depth = binding.etDepthCircular.text.toString().toFloatOrNull()
 
@@ -88,7 +98,7 @@ class CalculateFragment : Fragment() {
                         showError()
                     }
                 }
-                "Triangular" -> {
+                getString(R.string.shape_triangular) -> {
                     val base = binding.etBase.text.toString().toFloatOrNull()
                     val height = binding.etHeight.text.toString().toFloatOrNull()
                     val depth = binding.etDepthTriangular.text.toString().toFloatOrNull()
@@ -106,15 +116,20 @@ class CalculateFragment : Fragment() {
 
         // Configurar el botón de cálculo de productos químicos
         binding.btnCalculateChemicals.setOnClickListener {
-            calculateChemicals()
+            showChemicalOptionsDialog()
+        }
+
+        // Configurar el botón de agregar cloro
+        binding.btnAddChlorine.setOnClickListener {
+            addChlorine()
         }
     }
 
     private fun showForm(shape: String) {
         binding.formGroup.visibility = View.VISIBLE
-        binding.formRectangular.visibility = if (shape == "Rectangular") View.VISIBLE else View.GONE
-        binding.formCircular.visibility = if (shape == "Circular") View.VISIBLE else View.GONE
-        binding.formTriangular.visibility = if (shape == "Triangular") View.VISIBLE else View.GONE
+        binding.formRectangular.visibility = if (shape == getString(R.string.shape_rectangular)) View.VISIBLE else View.GONE
+        binding.formCircular.visibility = if (shape == getString(R.string.shape_circular)) View.VISIBLE else View.GONE
+        binding.formTriangular.visibility = if (shape == getString(R.string.shape_triangular)) View.VISIBLE else View.GONE
     }
 
     private fun hideForms() {
@@ -133,40 +148,86 @@ class CalculateFragment : Fragment() {
             putFloat("depth", depth)
             putInt("frequency", frequency)
             putFloat("volume", volume)
+            putBoolean("chlorine_added", false) // Reset chlorine added status
             apply() // Guardar los cambios
         }
 
         // Mostrar un mensaje de éxito
-        Toast.makeText(requireContext(), "Datos guardados correctamente", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), getString(R.string.data_saved), Toast.LENGTH_SHORT).show()
 
         // Actualizar la interfaz de usuario con los nuevos datos
         loadPoolData()
     }
 
     private fun showError() {
-        Toast.makeText(requireContext(), "Por favor, completa todos los campos correctamente", Toast.LENGTH_SHORT).show()
+        Toast.makeText(requireContext(), getString(R.string.error_complete_fields), Toast.LENGTH_SHORT).show()
     }
 
-    private fun calculateChemicals() {
+    private fun showChemicalOptionsDialog() {
+        val options = arrayOf(getString(R.string.calculate_chlorine))
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle(getString(R.string.calculate_chemicals))
+        builder.setItems(options) { _, which ->
+            when (which) {
+                0 -> calculateChlorine()
+            }
+        }
+        builder.show()
+    }
+
+    private fun calculateChlorine() {
         val sharedPrefs = requireContext().getSharedPreferences("pool_data", Context.MODE_PRIVATE)
         val volume = sharedPrefs.getFloat("volume", 0f)
 
         if (volume > 0) {
-            // Ejemplo de cálculos de productos químicos
-            val chlorine = volume * 0.00013f // 130g de cloro por cada 1000 litros
-            val algaecide = volume * 0.00002f // 20ml de alguicida por cada 1000 litros
-            val phMinus = volume * 0.0001f // 100g de pH minus por cada 1000 litros
-
-            val message = """
-                Productos Químicos Necesarios:
-                - Cloro: ${chlorine}kg
-                - Alguicida: ${algaecide}L
-                - pH Minus: ${phMinus}kg
-            """.trimIndent()
-
-            Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
+            val chlorine = volume * 3 / 1000 // 3 gramos por cada 1,000 litros
+            binding.tvChlorineAmount.text = getString(R.string.chlorine_needed, chlorine)
+            val chlorineAdded = sharedPrefs.getBoolean("chlorine_added", false)
+            if (chlorineAdded) {
+                binding.btnAddChlorine.visibility = View.GONE
+                binding.tvChlorineAmount.text = "${binding.tvChlorineAmount.text} (${getString(R.string.chlorine_added)})"
+            } else {
+                binding.btnAddChlorine.visibility = View.VISIBLE
+            }
+            binding.calculationResultsGroup.visibility = View.VISIBLE
         } else {
-            Toast.makeText(requireContext(), "No se ha encontrado el volumen de la piscina.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(requireContext(), getString(R.string.no_pool_volume), Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun addChlorine() {
+        val sharedPrefs = requireContext().getSharedPreferences("pool_data", Context.MODE_PRIVATE)
+        val editor = sharedPrefs.edit()
+        val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
+        editor.putString("last_cleaning_date", currentDate)
+        editor.putBoolean("chlorine_added", true)
+        editor.apply()
+
+        Toast.makeText(requireContext(), getString(R.string.chlorine_added), Toast.LENGTH_SHORT).show()
+        binding.btnAddChlorine.visibility = View.GONE
+        binding.tvChlorineAmount.text = "${binding.tvChlorineAmount.text} (${getString(R.string.chlorine_added)})"
+        updateNextCleaningDate()
+
+        // Notificar a HomeFragment que se ha agregado cloro
+        (requireActivity() as MainActivity).notifyChlorineAdded()
+    }
+
+    private fun updateNextCleaningDate() {
+        val sharedPrefs = requireContext().getSharedPreferences("pool_data", Context.MODE_PRIVATE)
+        val frequency = sharedPrefs.getInt("frequency", 0)
+        val lastCleaningDateStr = sharedPrefs.getString("last_cleaning_date", null)
+
+        if (lastCleaningDateStr != null && frequency > 0) {
+            val lastCleaningDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).parse(lastCleaningDateStr)
+            val nextCleaningDate = Calendar.getInstance().apply {
+                time = lastCleaningDate!!
+                add(Calendar.DAY_OF_YEAR, frequency)
+            }.time
+
+            val daysUntilNextCleaning = ((nextCleaningDate.time - Date().time) / (1000 * 60 * 60 * 24)).toInt()
+            binding.tvNextCleaning.text = getString(R.string.next_cleaning_in_days, daysUntilNextCleaning)
+        } else {
+            binding.tvNextCleaning.text = getString(R.string.next_cleaning_in_days, 0)
         }
     }
 
@@ -185,15 +246,29 @@ class CalculateFragment : Fragment() {
             binding.formGroup.visibility = View.GONE
             binding.savedDataGroup.visibility = View.VISIBLE
 
-            binding.tvSavedShape.text = "Forma: $shape"
-            binding.tvSavedDimensions.text = "Dimensiones: $length x $width x $depth m"
-            binding.tvSavedFrequency.text = "Frecuencia: cada $frequency días"
-            binding.tvSavedVolume.text = "Volumen: $volume m³"
+            binding.tvSavedShape.text = getString(R.string.pool_shape, shape)
+            binding.tvSavedDimensions.text = getString(R.string.pool_length, length) + " x " + getString(R.string.pool_width, width) + " x " + getString(R.string.pool_depth, depth)
+            binding.tvSavedFrequency.text = getString(R.string.pool_frequency, frequency)
+            binding.tvSavedVolume.text = getString(R.string.pool_volume, volume)
+
+            updateNextCleaningDate()
         } else {
             // Mostrar formulario para ingresar datos
             binding.textViewNoData.visibility = View.VISIBLE
             binding.formGroup.visibility = View.GONE
             binding.savedDataGroup.visibility = View.GONE
         }
+    }
+
+    fun resetPoolData() {
+        val sharedPrefs = requireContext().getSharedPreferences("pool_data", Context.MODE_PRIVATE)
+        sharedPrefs.edit().clear().apply()
+
+        // Ocultar los datos guardados y el cálculo de cloro
+        binding.savedDataGroup.visibility = View.GONE
+        binding.calculationResultsGroup.visibility = View.GONE
+        binding.textViewNoData.visibility = View.VISIBLE
+
+        Toast.makeText(requireContext(), getString(R.string.pool_data_reset), Toast.LENGTH_SHORT).show()
     }
 }
