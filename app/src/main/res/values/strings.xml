@@ -5,6 +5,7 @@
     <string name="notifications_switch">Activar notificaciones</string>
     <string name="view_history_button">Ver Historial de Limpiezas</string>
     <string name="reset_pool_data_button">Restablecer Datos de la Piscina</string>
+    <string name="calculate_chemicals_button">Calcular Productos Químicos</string>
     <string name="welcome_message">Bienvenido a AquaClean Manager</string>
     <string name="current_date">Hoy estamos a %1$s</string>
     <string name="days_since_last_cleaning">Han pasado %1$d días desde la última limpieza</string>
@@ -40,5 +41,13 @@
     <string name="chlorine_needed">Cloro necesario: %1$.2f gramos</string>
     <string name="next_cleaning_in_days">Próxima limpieza en: %1$d días</string>
     <string name="chlorine_added">Cloro agregado correctamente</string>
-    <string name="pool_data_reset">Datos de la piscina restablecidos</string> <!-- Añadir esta línea -->
+    <string name="pool_data_reset">Datos de la piscina restablecidos</string>
+    <string name="enter_ph">Ingresar pH</string>
+    <string name="ph_saved">pH guardado: %1$.2f</string>
+    <string name="invalid_ph_value">Valor de pH inválido</string>
+    <string name="add_ph_button">Agregar pH</string>
+    <string name="cancel">Cancelar</string>
+    <string name="view_cleaning_history">Ver Historial de Limpiezas</string>
+    <string name="opening_cleaning_history">Abriendo historial de limpiezas...</string>
+    <string name="cleaning_history_title">Historial de Limpiezas</string> <!-- Añadir esta línea -->
 </resources>

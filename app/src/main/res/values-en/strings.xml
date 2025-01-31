@@ -5,6 +5,7 @@
     <string name="notifications_switch">Enable notifications</string>
     <string name="view_history_button">View Cleaning History</string>
     <string name="reset_pool_data_button">Reset Pool Data</string>
+    <string name="calculate_chemicals_button">Calculate Chemicals</string>
     <string name="welcome_message">Welcome to AquaClean Manager</string>
     <string name="current_date">Today is %1$s</string>
     <string name="days_since_last_cleaning">%1$d days since the last cleaning</string>
@@ -40,5 +41,13 @@
     <string name="chlorine_needed">Chlorine needed: %1$.2f grams</string>
     <string name="next_cleaning_in_days">Next cleaning in: %1$d days</string>
     <string name="chlorine_added">Chlorine added successfully</string>
-    <string name="pool_data_reset">Pool data reset</string> <!-- Añadir esta línea -->
+    <string name="pool_data_reset">Pool data reset</string>
+    <string name="enter_ph">Enter pH</string>
+    <string name="ph_saved">pH saved: %1$.2f</string>
+    <string name="invalid_ph_value">Invalid pH value</string>
+    <string name="add_ph_button">Add pH</string>
+    <string name="cancel">Cancel</string>
+    <string name="view_cleaning_history">View Cleaning History</string>
+    <string name="opening_cleaning_history">Opening cleaning history...</string>
+    <string name="cleaning_history_title">Cleaning History</string> <!-- Añadir esta línea -->
 </resources>

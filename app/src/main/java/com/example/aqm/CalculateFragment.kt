@@ -2,6 +2,7 @@ package com.example.aqm.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,16 +23,28 @@ class CalculateFragment : Fragment() {
 
     private lateinit var binding: FragmentCalculateBinding
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("CalculateFragment", "onAttach called")
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("CalculateFragment", "onCreate called")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("CalculateFragment", "onCreateView called")
         binding = FragmentCalculateBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("CalculateFragment", "onViewCreated called")
 
         // Ajustar márgenes para notch y bordes
         ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
@@ -123,6 +136,41 @@ class CalculateFragment : Fragment() {
         binding.btnAddChlorine.setOnClickListener {
             addChlorine()
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("CalculateFragment", "onStart called")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d("CalculateFragment", "onResume called")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Log.d("CalculateFragment", "onPause called")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("CalculateFragment", "onStop called")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("CalculateFragment", "onDestroyView called")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("CalculateFragment", "onDestroy called")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("CalculateFragment", "onDetach called")
     }
 
     private fun showForm(shape: String) {

@@ -97,24 +97,6 @@
             android:layout_marginBottom="16dp"
             app:cardCornerRadius="12dp"
             app:cardElevation="4dp">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:padding="16dp">
-
-                <Button
-                    android:id="@+id/buttonViewHistory"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/view_history_button"
-                    android:backgroundTint="@color/material_dynamic_neutral80"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:padding="12dp"
-                    android:layout_marginBottom="8dp" />
-            </LinearLayout>
         </androidx.cardview.widget.CardView>
 
         <!-- CardView para restablecer datos de la piscina -->

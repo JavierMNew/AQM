@@ -3,10 +3,12 @@ package com.example.aqm.fragments
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import androidx.fragment.app.Fragment
 import com.example.aqm.R
 import com.example.aqm.databinding.FragmentHomeBinding
@@ -22,28 +24,47 @@ class HomeFragment : Fragment() {
         loadPoolData()
     }
 
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        Log.d("HomeFragment", "onAttach called")
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        Log.d("HomeFragment", "onCreate called")
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        Log.d("HomeFragment", "onCreateView called")
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        Log.d("HomeFragment", "onViewCreated called")
         sharedPrefs = requireContext().getSharedPreferences("pool_data", Context.MODE_PRIVATE)
         loadPoolData()
         updateCurrentDate()
 
-        // Configurar el botón de agregar cloro
-        binding.btnAddChlorineHome.setOnClickListener {
-            addChlorine()
+        ViewCompat.setOnApplyWindowInsetsListener(view) { v, insets ->
+            val systemInsets = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemInsets.left, systemInsets.top, systemInsets.right, 0)
+            insets
         }
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d("HomeFragment", "onStart called")
     }
 
     override fun onResume() {
         super.onResume()
+        Log.d("HomeFragment", "onResume called")
         // Registrar el listener
         sharedPrefs.registerOnSharedPreferenceChangeListener(preferenceChangeListener)
         // Cargar los datos cada vez que el fragmento se reanuda
@@ -52,8 +73,30 @@ class HomeFragment : Fragment() {
 
     override fun onPause() {
         super.onPause()
+        Log.d("HomeFragment", "onPause called")
         // Desregistrar el listener
         sharedPrefs.unregisterOnSharedPreferenceChangeListener(preferenceChangeListener)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Log.d("HomeFragment", "onStop called")
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        Log.d("HomeFragment", "onDestroyView called")
+        _binding = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Log.d("HomeFragment", "onDestroy called")
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        Log.d("HomeFragment", "onDetach called")
     }
 
     fun loadPoolData() {
@@ -87,44 +130,15 @@ class HomeFragment : Fragment() {
             } else {
                 binding.tvDaysSinceLastCleaning.text = getString(R.string.days_since_last_cleaning, 0)
             }
-
-            // Mostrar u ocultar el botón de agregar cloro
-            if (chlorineAdded) {
-                binding.btnAddChlorineHome.visibility = View.GONE
-                binding.tvChlorineStatus.text = getString(R.string.chlorine_added)
-            } else {
-                binding.btnAddChlorineHome.visibility = View.VISIBLE
-                binding.tvChlorineStatus.text = ""
-            }
         } else {
             // Mostrar mensaje de que no hay datos
             binding.tvPoolVolume.text = getString(R.string.no_pool_data)
             binding.tvDaysSinceLastCleaning.text = getString(R.string.days_since_last_cleaning, 0)
-            binding.btnAddChlorineHome.visibility = View.GONE
-            binding.tvChlorineStatus.text = ""
         }
     }
 
     private fun updateCurrentDate() {
         val currentDate = SimpleDateFormat("dd MMMM yyyy", Locale.getDefault()).format(Date())
         binding.tvCurrentDate.text = getString(R.string.current_date, currentDate)
-    }
-
-    private fun addChlorine() {
-        val editor = sharedPrefs.edit()
-        val currentDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(Date())
-        editor.putString("last_cleaning_date", currentDate)
-        editor.putBoolean("chlorine_added", true)
-        editor.apply()
-
-        Toast.makeText(requireContext(), getString(R.string.chlorine_added), Toast.LENGTH_SHORT).show()
-        binding.btnAddChlorineHome.visibility = View.GONE
-        binding.tvChlorineStatus.text = getString(R.string.chlorine_added)
-        loadPoolData()
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
